@@ -1,11 +1,11 @@
-version: "3.9"
-
 services:
   exam-helper:
     build: .
     container_name: exam-helper
-    env_file: .env
+    environment:
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
     volumes:
       - ./data/screenshots:/app/data/screenshots:ro
       - ./data/answers:/app/data/answers
+      - ./data/summary:/app/data/summary
     restart: unless-stopped

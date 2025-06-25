@@ -12,7 +12,8 @@ if not GEMINI_API_KEY:
 	sys.exit(1)
 
 INPUT_FOLDER = Path("data/screenshots")
-OUTPUT_FOLDER = Path("data/answers")
+OUTPUT_FOLDER_ANSWERS = Path("data/answers")
+OUTPUT_FOLDER_SUMMARY = Path("data/summary")
 SUPPORTED_EXTS = {".png", ".jpg", ".jpeg"}
 
 # Optional configuration

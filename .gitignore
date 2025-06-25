@@ -9,4 +9,10 @@
 .env
 
 # data folder for screenshots and answers
-/data/
+/data/*/*
+!/data/*/.keep
+
+# ignore all Python bytecode files and cache folders
+*.py[cod]
+__pycache__/
+
