@@ -14,3 +14,7 @@ if not GEMINI_API_KEY:
 INPUT_FOLDER = Path("data/screenshots")
 OUTPUT_FOLDER = Path("data/answers")
 SUPPORTED_EXTS = {".png", ".jpg", ".jpeg"}
+
+# Optional configuration
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-1.5-flash")
+RESPONSE_LANG = os.getenv("RESPONSE_LANG", "en")
