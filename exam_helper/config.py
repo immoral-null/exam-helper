@@ -6,9 +6,9 @@ from dotenv import load_dotenv
 
 load_dotenv()  # only loads .env if it exists
 
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-	print("❌ OPENAI_API_KEY is not set. Please set it in your environment or .env file.")
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+	print("❌ GEMINI_API_KEY is not set. Please set it in your environment or .env file.")
 	sys.exit(1)
 
 INPUT_FOLDER = Path("data/screenshots")

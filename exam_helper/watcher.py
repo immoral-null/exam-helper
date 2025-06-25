@@ -5,7 +5,7 @@ from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 
 from exam_helper.config import INPUT_FOLDER, OUTPUT_FOLDER, SUPPORTED_EXTS
-from exam_helper.gpt_client import ask_chatgpt
+from exam_helper.llm_client import ask_chatgpt
 from exam_helper.logger import setup_logger
 
 logger = setup_logger()
