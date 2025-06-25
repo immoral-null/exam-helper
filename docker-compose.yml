@@ -1,11 +1,9 @@
 services:
   exam-helper:
-    build: .
+    image: immoralnull/exam-helper:latest
     container_name: exam-helper
     environment:
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     volumes:
-      - ./data/screenshots:/app/data/screenshots:ro
-      - ./data/answers:/app/data/answers
-      - ./data/summary:/app/data/summary
+      - ./data:/app/data
     restart: unless-stopped
