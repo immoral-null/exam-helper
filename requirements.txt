@@ -1,5 +1,4 @@
+dotenv
+google
 google-generativeai
-google  # dummy package to suppress the warning `Package containing module 'google' is not listed in the project requirements`
-python-dotenv
 watchdog
-pillow
