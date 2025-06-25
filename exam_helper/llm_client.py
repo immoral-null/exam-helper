@@ -1,9 +1,11 @@
 from pathlib import Path
 
 import google.generativeai as genai
-from google.generativeai.types import GenerationConfig
 
 from exam_helper.config import GEMINI_API_KEY, GEMINI_MODEL
+from exam_helper.logger import setup_logger
+
+logger = setup_logger()
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel(GEMINI_MODEL)
@@ -13,11 +15,26 @@ def ask_chatgpt(image_path: Path) -> str:
     with image_path.open("rb") as f:
         img_bytes = f.read()
 
-    prompt = "Answer this exam question clearly and briefly. Use the same language as in the question."
-
-    response = model.generate_content(
-        [prompt, {"mime_type": "image/png", "data": img_bytes}],
-        generation_config=GenerationConfig(max_output_tokens=500)
+    prompt = (
+        "Read the exam question in the image. "
+        "Return only the correct answer option exactly as shown in the image. "
+        "Keep the answer in the same language and formatting. "
+        "Do not explain, rephrase, translate, or add anything else."
     )
 
-    return response.text.strip()
+    response = None
+    try:
+        response = model.generate_content(
+            contents=[prompt, {"mime_type": "image/png", "data": img_bytes}]
+        )
+
+        candidates = response.candidates
+        if candidates and candidates[0].content.parts:
+            return candidates[0].content.parts[0].text.strip()
+
+        logger.error(f"❌ Empty response or no valid parts. Full response:\n{response}")
+        return "[No valid answer returned]"
+
+    except Exception as e:
+        logger.error(f"❌ Error processing response. Error is:\n{e}\nresponse is:\n{response}")
+        return "[Error processing response]"
