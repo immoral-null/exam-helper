@@ -1,0 +1,12 @@
+# IntelliJ/PyCharm
+/.idea/
+/*.iml
+
+# Python venv
+.venv/
+
+# ChatGPT Secret Key
+.env
+
+# data folder for screenshots and answers
+/data/
