@@ -2,11 +2,12 @@ from pathlib import Path
 
 from watchdog.events import FileSystemEventHandler
 
-from exam_helper.config import OUTPUT_FOLDER_ANSWERS, OUTPUT_FOLDER_SUMMARY, SUPPORTED_EXTS
+from exam_helper.config import OUTPUT_FOLDER_ANSWERS, OUTPUT_FOLDER_SUMMARY, SUPPORTED_EXTENSIONS
 from exam_helper.llm_client import ask_chatgpt
-from exam_helper.logger import setup_logger
+from exam_helper.logger import setup_logger, setup_writer
 
 logger = setup_logger()
+writer = setup_writer()
 
 
 class ScreenshotHandler(FileSystemEventHandler):
@@ -14,10 +15,11 @@ class ScreenshotHandler(FileSystemEventHandler):
         if event.is_directory:
             return
         file = Path(event.src_path)
-        if file.suffix.lower() in SUPPORTED_EXTS:
-            logger.info(f"📸 New screenshot: {file.name}")
+        if file.suffix.lower() in SUPPORTED_EXTENSIONS:
+            logger.debug(f"📸 New screenshot: {file.name}")
             try:
                 answer = ask_chatgpt(file)
+                writer.info(answer)
                 self._save_answer(file, answer)
                 self._append_to_summary(file.name, answer)
             except Exception as e:
@@ -28,7 +30,7 @@ class ScreenshotHandler(FileSystemEventHandler):
         out_file = OUTPUT_FOLDER_ANSWERS / f"{file.stem}.txt"
         with out_file.open("w", encoding="utf-8") as f:
             f.write(answer)
-        logger.info(f"✅ Answer saved: {out_file}")
+        logger.debug(f"✅ Answer saved: {out_file}")
 
     @staticmethod
     def _append_to_summary(filename: str, answer: str):

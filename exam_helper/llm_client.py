@@ -2,7 +2,7 @@ from pathlib import Path
 
 import google.generativeai as genai
 
-from exam_helper.config import GEMINI_API_KEY, GEMINI_MODEL
+from exam_helper.config import GEMINI_API_KEY, GEMINI_MODEL, PROMPT
 from exam_helper.logger import setup_logger
 
 logger = setup_logger()
@@ -15,17 +15,10 @@ def ask_chatgpt(image_path: Path) -> str:
     with image_path.open("rb") as f:
         img_bytes = f.read()
 
-    prompt = (
-        "Read the exam question in the image. "
-        "Return only the correct answer option exactly as shown in the image. "
-        "Keep the answer in the same language and formatting. "
-        "Do not explain, rephrase, translate, or add anything else."
-    )
-
     response = None
     try:
         response = model.generate_content(
-            contents=[prompt, {"mime_type": "image/png", "data": img_bytes}]
+            contents=[PROMPT, {"mime_type": "image/png", "data": img_bytes}]
         )
 
         candidates = response.candidates
