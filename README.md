@@ -1,7 +1,7 @@
 # Exam Helper
 
 This tool uses AI to answer screenshot-based exam questions automatically.
-Just run the container, drop screenshots into a folder, and get a summary of answers.
+Just run the container, drop screenshots into a folder, and get answers.
 
 ---
 
@@ -28,13 +28,15 @@ Just run the container, drop screenshots into a folder, and get a summary of ans
 1. **Run the app**  
    In the folder containing `docker-compose.yml`, run:
    ```
-   docker compose up -d
+   docker compose up
    ```
 
 2. **Add exam screenshots**  
    Save screenshots of exam questions to `data/screenshots/`.
 
 3. **Get answers**  
-   AI-generated answers will be collected in `data/summary/summary.txt`.
+   AI-generated answers will be:
+   - written to output
+   - collected in `data/summary/summary.txt`.
 
 > ✅ That’s it. Good luck with your exam!
