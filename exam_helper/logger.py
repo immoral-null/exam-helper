@@ -20,7 +20,7 @@ def setup_writer():
     if not writer.hasHandlers():
         writer.setLevel(LOG_LEVEL)  # or logging.INFO
         handler = logging.StreamHandler()
-        handler.setFormatter(logging.Formatter("\n\n%(message)s"))  # << this line is key
+        handler.setFormatter(logging.Formatter("%(message)s"))  # << this line is key
         writer.addHandler(handler)
         writer.propagate = False
     return writer

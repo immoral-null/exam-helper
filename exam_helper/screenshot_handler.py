@@ -19,7 +19,7 @@ class ScreenshotHandler(FileSystemEventHandler):
             logger.debug(f"📸 New screenshot: {file.name}")
             try:
                 answer = ask_chatgpt(file)
-                writer.info(answer)
+                writer.info(f"\n\n{answer}")
                 self._save_answer(file, answer)
                 self._append_to_summary(file.name, answer)
             except Exception as e:

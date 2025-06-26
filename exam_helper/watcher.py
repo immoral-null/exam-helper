@@ -3,11 +3,12 @@ import time
 
 from watchdog.observers import Observer
 
-from exam_helper.config import INPUT_FOLDER, OUTPUT_FOLDER_ANSWERS, OUTPUT_FOLDER_SUMMARY
-from exam_helper.logger import setup_logger
+from exam_helper.config import INPUT_FOLDER, OUTPUT_FOLDER_ANSWERS, OUTPUT_FOLDER_SUMMARY, PROMPT, GEMINI_MODEL
+from exam_helper.logger import setup_logger, setup_writer
 from exam_helper.screenshot_handler import ScreenshotHandler
 
 logger = setup_logger()
+writer = setup_writer()
 
 
 def wait_for_file_complete(path, timeout=5, interval=0.5):
@@ -44,7 +45,11 @@ def start_monitoring():
     observer = Observer()
     observer.schedule(event_handler, str(INPUT_FOLDER), recursive=False)
     observer.start()
-    logger.info(f"📂 Watching folder: {INPUT_FOLDER}")
+
+    logger.info(f"Instructions for {GEMINI_MODEL}")
+    writer.info(f"\n{PROMPT}\n")
+
+    logger.info(f"📂 Waiting for screenshots in folder: {INPUT_FOLDER}")
 
     try:
         while True:
